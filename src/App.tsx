@@ -19,7 +19,7 @@ function App() {
         newBoard[r].push(0);
       }
     }
-    setBoardData(boardData);
+    setBoardData(newBoard);
   };
   initBoard();
 
