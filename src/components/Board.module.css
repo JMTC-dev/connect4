@@ -25,9 +25,6 @@
   cursor: pointer;
 }
 
-.row {
-}
-
 .cell {
   display: flex;
   align-items: center;

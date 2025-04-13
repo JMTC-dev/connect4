@@ -1,27 +1,27 @@
 import { useState } from "react";
-import { Board, row, col } from "./types/constants";
+import { Board, row, col, Cell } from "./types/constants";
 import "./App.css";
 import GameBoard from "./components/Board";
 
 const initBoard = () => {
-  let newBoard: Board = [];
-  for (let r = 0; r < row; r++) {
-    for (let c = 0; c < col; c++) {
-      if (!newBoard[r]) {
-        newBoard[r] = [];
-      }
-      newBoard[r].push(0);
-    }
-  }
+  let newBoard: Board = Array(col)
+    .fill(null)
+    .map(() => Array(row).fill(0));
   return newBoard;
+};
+
+const findAvailableRow = (colIndex: number) => {
+  console.log("hello", colIndex);
 };
 
 function App() {
   const [boardData, setBoardData] = useState<Board>(() => initBoard());
+  const [playerTurn, setPlayerTurn] = useState<Cell>(1);
   return (
     <>
       <h1>Connect 4</h1>
-      <GameBoard boardData={boardData} />
+      <h2>{`Player ${playerTurn}'s turn`}</h2>
+      <GameBoard boardData={boardData} onColumnClick={findAvailableRow} />
     </>
   );
 }
