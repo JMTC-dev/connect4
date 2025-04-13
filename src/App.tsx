@@ -1,30 +1,18 @@
 import { useState } from "react";
-
+import { Board, row, col, Disc } from "./consts";
 import "./App.css";
-type Disc = 1 | 2 | 0;
-type Board = Disc[][];
-const row = 6;
-const col = 7;
-const winScore = 4;
+import GameBoard from "./components/GameBoard";
 
-const initBoard = () => {
-  let newBoard: Board = [];
-  for (let r = 0; r < row; r++) {
-    for (let c = 0; c < col; c++) {
-      if (!newBoard[r]) {
-        newBoard[r] = [];
-      }
-      newBoard[r].push(0);
-    }
-  }
-  return newBoard;
-};
+const initBoard: Board = Array(row)
+  .fill(0)
+  .map(() => Array(col).fill(0 as Disc));
 
 function App() {
-  const [boardData, setBoardData] = useState<Board>(() => initBoard());
+  const [boardData, setBoardData] = useState<Board>(initBoard);
   return (
     <>
       <h1>Connect 4</h1>
+      <GameBoard boardData={boardData} />
     </>
   );
 }
