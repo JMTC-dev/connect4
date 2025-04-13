@@ -1,11 +1,7 @@
 import { useState } from "react";
-
+import { Board, row, col } from "./types/constants";
 import "./App.css";
-type Disc = 1 | 2 | 0;
-type Board = Disc[][];
-const row = 6;
-const col = 7;
-const winScore = 4;
+import GameBoard from "./components/Board";
 
 const initBoard = () => {
   let newBoard: Board = [];
@@ -25,6 +21,7 @@ function App() {
   return (
     <>
       <h1>Connect 4</h1>
+      <GameBoard boardData={boardData} />
     </>
   );
 }
