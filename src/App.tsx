@@ -10,18 +10,29 @@ const initBoard = () => {
   return newBoard;
 };
 
-const findAvailableRow = (colIndex: number) => {
-  console.log("hello", colIndex);
+const findAvailableRow = (selectedColumn: Cell[]) => {
+  for (let r = 0; r < selectedColumn.length; r++) {
+    if (selectedColumn[r] === 0) {
+      return r;
+    }
+  }
 };
 
 function App() {
   const [boardData, setBoardData] = useState<Board>(() => initBoard());
   const [playerTurn, setPlayerTurn] = useState<Cell>(1);
+
+  const handlePlay = (colIndex: number) => {
+    const selectedColumn = boardData[colIndex];
+    const availableRow = findAvailableRow(selectedColumn);
+    console.log(colIndex, availableRow);
+  };
+
   return (
     <>
       <h1>Connect 4</h1>
       <h2>{`Player ${playerTurn}'s turn`}</h2>
-      <GameBoard boardData={boardData} onColumnClick={findAvailableRow} />
+      <GameBoard boardData={boardData} onColumnClick={handlePlay} />
     </>
   );
 }
