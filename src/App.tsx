@@ -16,6 +16,7 @@ const findAvailableRow = (selectedColumn: Cell[]) => {
       return r;
     }
   }
+  return -1;
 };
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
     const selectedColumn = boardData[colIndex];
     const availableRow = findAvailableRow(selectedColumn);
 
-    if (availableRow === -1 || availableRow === undefined) {
+    if (availableRow === -1) {
       const nextIsDisabled = [...isDisabled];
       nextIsDisabled.push(colIndex);
       return setIsDisabled(nextIsDisabled);

@@ -31,7 +31,6 @@ const GameBoard = ({
             <button
               key={`col-${colIndex}`}
               className={`${styles.col} ${styles.btnDisable}`}
-              onClick={() => onColumnClick(colIndex)}
               disabled={true}
             >
               {col.map((row, rowIndex) => (
