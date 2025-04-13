@@ -40,13 +40,28 @@
   width: 5.5rem;
   background-color: hsl(221, 51%, 26%);
   border-radius: 50%;
+  transform: scale(1);
   transition: all 0.2s ease-out;
 }
 
+@keyframes slide-in {
+  from {
+    scale: 105%;
+  }
+
+  to {
+    scale: 100%;
+  }
+}
+
 .playerOne {
-  background-color: hsl(342.75, 100%, 51.47%);
+  background-color: hsl(0deg, 100%, 60.31%);
+  animation-duration: 0.2s;
+  animation-name: slide-in;
 }
 
 .playerTwo {
   background-color: hsl(32.92, 100%, 57.34%);
+  animation-duration: 0.2s;
+  animation-name: slide-in;
 }
