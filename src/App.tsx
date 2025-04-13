@@ -21,16 +21,18 @@ const findAvailableRow = (selectedColumn: Cell[]) => {
 function App() {
   const [boardData, setBoardData] = useState<Board>(() => initBoard());
   const [playerTurn, setPlayerTurn] = useState<Cell>(1);
+  const [isDisabled, setIsDisabled] = useState<number[]>([]);
 
   const handlePlay = (colIndex: number) => {
     const selectedColumn = boardData[colIndex];
     const availableRow = findAvailableRow(selectedColumn);
 
     if (availableRow === -1 || availableRow === undefined) {
-      return console.log("Column is full");
+      const nextIsDisabled = [...isDisabled];
+      nextIsDisabled.push(colIndex);
+      return setIsDisabled(nextIsDisabled);
     }
 
-    // 4. Update the board state with the new board
     console.log(colIndex, availableRow);
 
     const nextBoard = boardData.map((col, i) => {
@@ -52,7 +54,11 @@ function App() {
     <>
       <h1>Connect 4</h1>
       <h2>{`Player ${playerTurn}'s turn`}</h2>
-      <GameBoard boardData={boardData} onColumnClick={handlePlay} />
+      <GameBoard
+        boardData={boardData}
+        onColumnClick={handlePlay}
+        isDisabled={isDisabled}
+      />
     </>
   );
 }

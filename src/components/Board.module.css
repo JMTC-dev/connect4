@@ -25,7 +25,14 @@
   cursor: pointer;
 }
 
-.cell {
+.btnDisable {
+  pointer-events: none;
+  cursor: unset;
+}
+
+.cell,
+.playerOne,
+.playerTwo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,4 +40,13 @@
   width: 5.5rem;
   background-color: hsl(221, 51%, 26%);
   border-radius: 50%;
+  transition: all 0.2s ease-out;
+}
+
+.playerOne {
+  background-color: hsl(342.75, 100%, 51.47%);
+}
+
+.playerTwo {
+  background-color: hsl(32.92, 100%, 57.34%);
 }
