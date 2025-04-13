@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Board, row, col, Cell } from "./types/constants";
 import "./App.css";
 import GameBoard from "./components/Board";
@@ -22,16 +22,23 @@ const findAvailableRow = (selectedColumn: Cell[]) => {
 function App() {
   const [boardData, setBoardData] = useState<Board>(() => initBoard());
   const [playerTurn, setPlayerTurn] = useState<Cell>(1);
-  const [isDisabled, setIsDisabled] = useState<number[]>([]);
+
+  const disabledCols = useMemo(() => {
+    const fullCols: number[] = [];
+    boardData.forEach((col, colIndex) => {
+      if (col[0] !== 0) {
+        fullCols.push(colIndex);
+      }
+    });
+    return fullCols;
+  }, [boardData]);
 
   const handlePlay = (colIndex: number) => {
     const selectedColumn = boardData[colIndex];
     const availableRow = findAvailableRow(selectedColumn);
 
-    if (availableRow === -1) {
-      const nextIsDisabled = [...isDisabled];
-      nextIsDisabled.push(colIndex);
-      return setIsDisabled(nextIsDisabled);
+    if (disabledCols.includes(colIndex)) {
+      return;
     }
 
     console.log(colIndex, availableRow);
@@ -58,7 +65,7 @@ function App() {
       <GameBoard
         boardData={boardData}
         onColumnClick={handlePlay}
-        isDisabled={isDisabled}
+        isDisabled={disabledCols}
       />
     </>
   );
