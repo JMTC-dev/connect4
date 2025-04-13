@@ -11,7 +11,7 @@ const initBoard = () => {
 };
 
 const findAvailableRow = (selectedColumn: Cell[]) => {
-  for (let r = 0; r < selectedColumn.length; r++) {
+  for (let r = selectedColumn.length - 1; r >= 0; r--) {
     if (selectedColumn[r] === 0) {
       return r;
     }
@@ -25,7 +25,27 @@ function App() {
   const handlePlay = (colIndex: number) => {
     const selectedColumn = boardData[colIndex];
     const availableRow = findAvailableRow(selectedColumn);
+
+    if (availableRow === -1 || availableRow === undefined) {
+      return console.log("Column is full");
+    }
+
+    // 4. Update the board state with the new board
     console.log(colIndex, availableRow);
+
+    const nextBoard = boardData.map((col, i) => {
+      if (i === colIndex) {
+        const newCol = [...col];
+        newCol[availableRow] = playerTurn;
+        return newCol;
+      } else {
+        return col;
+      }
+    });
+
+    setBoardData(nextBoard);
+
+    setPlayerTurn(playerTurn === 1 ? 2 : 1);
   };
 
   return (
