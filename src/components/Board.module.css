@@ -40,7 +40,6 @@
   width: 5.5rem;
   background-color: hsl(221, 51%, 26%);
   border-radius: 50%;
-  transform: scale(1);
   transition: all 0.2s ease-out;
 }
 

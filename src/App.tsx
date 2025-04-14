@@ -33,6 +33,73 @@ function App() {
     return fullCols;
   }, [boardData]);
 
+  const checkWin = (colIndex: number, availableRow: number) => {
+    const checkVertical = () => {
+      // Check Down
+      let c = 1;
+      let step = 1;
+      while (
+        step < 4 &&
+        availableRow + step >= 0 &&
+        boardData[colIndex][availableRow + step] === playerTurn
+      ) {
+        c++;
+        step++;
+      }
+
+      step = 1;
+      while (
+        step < 4 &&
+        availableRow - step <= 5 &&
+        boardData[colIndex][availableRow - step] === playerTurn
+      ) {
+        c++;
+        step++;
+      }
+      if (c === 4) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    const checkHorizontal = () => {
+      let c = 1;
+      let step = 1;
+
+      // Check Left
+      while (
+        step < 4 &&
+        colIndex - step >= 0 &&
+        boardData[colIndex - step][availableRow] === playerTurn
+      ) {
+        c++;
+        step++;
+      }
+
+      step = 1;
+      // Check Right
+      while (
+        step < 4 &&
+        colIndex + step <= 6 &&
+        boardData[colIndex + step][availableRow] === playerTurn
+      ) {
+        c++;
+        step++;
+      }
+
+      if (c === 4) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    if (checkHorizontal() || checkVertical()) {
+      console.log(`Player ${playerTurn} Wins!`);
+    }
+  };
+
   const handlePlay = (colIndex: number) => {
     const selectedColumn = boardData[colIndex];
     const availableRow = findAvailableRow(selectedColumn);
@@ -54,6 +121,7 @@ function App() {
     });
 
     setBoardData(nextBoard);
+    checkWin(colIndex, availableRow);
 
     setPlayerTurn(playerTurn === 1 ? 2 : 1);
   };
