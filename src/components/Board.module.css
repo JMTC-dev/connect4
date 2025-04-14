@@ -60,7 +60,7 @@
 }
 
 .playerTwo {
-  background-color: hsl(32.92, 100%, 57.34%);
+  background-color: hsl(45, 90.2%, 60%);
   animation-duration: 0.2s;
   animation-name: slide-in;
 }
