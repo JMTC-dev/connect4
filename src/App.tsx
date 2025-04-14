@@ -52,6 +52,13 @@ function App() {
   const [isWinner, setIsWinner] = useState<Cell>(0);
   const [isDraw, setIsDraw] = useState(false);
 
+  const resetGame = () => {
+    setIsDraw(false);
+    setPlayerTurn(isWinner);
+    setIsWinner(0);
+    setBoardData(() => initBoard());
+  };
+
   const disabledCols = useMemo(() => {
     const fullCols: number[] = [];
     boardData.forEach((col, colIndex) => {
@@ -130,13 +137,27 @@ function App() {
   return (
     <>
       <h1>Connect 4</h1>
+
       {isDraw ? (
-        <h2>It's a draw!</h2>
+        <>
+          <h2>It's a draw!</h2>
+        </>
       ) : isWinner > 0 ? (
-        <h2>{`Player ${isWinner} wins!`}</h2>
+        <>
+          <h2>{`Player ${isWinner} wins!`}</h2>
+        </>
       ) : (
         <h2>{`Player ${playerTurn}'s turn`}</h2>
       )}
+      <div
+        className={`reset-container ${
+          isDraw || isWinner > 0 ? "show" : "hide"
+        }`}
+      >
+        <button className="reset-button" onClick={resetGame}>
+          Play Again
+        </button>
+      </div>
       <GameBoard
         boardData={boardData}
         onColumnClick={handlePlay}
