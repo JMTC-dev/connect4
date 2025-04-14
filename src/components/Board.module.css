@@ -15,6 +15,7 @@
   background-color: hsl(221, 64%, 43%);
   transform: scale(1);
   border-radius: 0;
+  cursor: pointer;
   transition: all 0.2s ease-out;
 }
 
@@ -22,7 +23,6 @@
   background-color: hsl(221, 51%, 48%);
   border-radius: 0.5rem;
   transform: scale(1.01);
-  cursor: pointer;
 }
 
 .btnDisable {
