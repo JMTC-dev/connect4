@@ -64,3 +64,8 @@
   animation-duration: 0.2s;
   animation-name: slide-in;
 }
+
+/* Board.module.css */
+.winnerCell {
+  box-shadow: inset 0px 0px 0px 3px hsl(0, 0%, 100%);
+}

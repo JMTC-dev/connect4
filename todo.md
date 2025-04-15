@@ -2,7 +2,6 @@
 
 ## 📝 To Do
 
-- Highlight winning discs
 - Mobile responsiveness
 - Save match history
 - Reset Game State on Draw/Win
@@ -12,3 +11,5 @@
 ## 🛠 In Progress
 
 ## ✅ Done
+
+- Highlight winning discs

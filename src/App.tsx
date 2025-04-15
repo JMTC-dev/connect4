@@ -26,10 +26,11 @@ const countLine = (
   dc: number,
   dr: number,
   player: Cell
-): number => {
+): [number, [number, number][]] => {
   let count = 0;
   let colIndex = startCol + dc;
   let colRow = startRow + dr;
+  let winningTiles: [number, number][] = [];
 
   while (
     colIndex >= 0 &&
@@ -38,12 +39,14 @@ const countLine = (
     colRow < board[colIndex].length &&
     board[colIndex][colRow] === player
   ) {
+    if (!winningTiles.includes([colIndex, colRow]))
+      winningTiles.push([colIndex, colRow]);
     count++;
     colIndex += dc;
     colRow += dr;
   }
 
-  return count;
+  return [count, winningTiles];
 };
 
 function App() {
@@ -51,6 +54,7 @@ function App() {
   const [playerTurn, setPlayerTurn] = useState<Cell>(1);
   const [isWinner, setIsWinner] = useState<Cell>(0);
   const [isDraw, setIsDraw] = useState(false);
+  const [winnerCells, setWinnerCells] = useState<[number, number][]>();
 
   const resetGame = () => {
     setIsDraw(false);
@@ -88,8 +92,14 @@ function App() {
     for (let [dc, dr] of directions) {
       let forward = countLine(board, colIndex, availableRow, dc, dr, player);
       let backward = countLine(board, colIndex, availableRow, -dc, -dr, player);
-
-      if (forward + backward + 1 >= 4) {
+      if (forward[0] + backward[0] + 1 >= 4) {
+        if (forward[1].length >= 3) {
+          forward[1].unshift([colIndex, availableRow]);
+          setWinnerCells(forward[1]);
+        } else {
+          backward[1].unshift([colIndex, availableRow]);
+          setWinnerCells(backward[1]);
+        }
         return true;
       }
     }
@@ -162,6 +172,7 @@ function App() {
         boardData={boardData}
         onColumnClick={handlePlay}
         isDisabled={disabledCols}
+        winnerCells={winnerCells}
       />
     </>
   );

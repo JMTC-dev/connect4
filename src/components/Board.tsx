@@ -5,6 +5,7 @@ interface GameBoardProps {
   boardData: Board;
   onColumnClick: (colIndex: number) => void;
   isDisabled: number[];
+  winnerCells?: [number, number][];
 }
 
 const handleCellClass = (rowValue: number) => {
@@ -22,7 +23,17 @@ const GameBoard = ({
   boardData,
   onColumnClick,
   isDisabled,
+  winnerCells,
 }: GameBoardProps) => {
+  const isWinnerCell = (
+    colIndex: number,
+    rowIndex: number,
+    winnerCells: [number, number][]
+  ) => {
+    if (!winnerCells) return false;
+    return winnerCells.some(([c, r]) => c === colIndex && r === rowIndex);
+  };
+
   return (
     <>
       <div className={`${styles.gameboard}`}>
@@ -36,7 +47,16 @@ const GameBoard = ({
               {col.map((row, rowIndex) => (
                 <div
                   key={`col-${colIndex}-row-${rowIndex}`}
-                  className={handleCellClass(row)}
+                  className={
+                    handleCellClass(row) +
+                    (isWinnerCell(
+                      colIndex,
+                      rowIndex,
+                      winnerCells as [number, number][]
+                    )
+                      ? ` ${styles.winnerCell}`
+                      : "")
+                  }
                 ></div>
               ))}
             </button>
